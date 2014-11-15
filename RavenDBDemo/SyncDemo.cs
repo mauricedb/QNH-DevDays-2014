@@ -24,7 +24,10 @@ namespace RavenDBDemo
 
         private static void ListCustomers(IDocumentSession session)
         {
-            var customers = session.Query<Customer>().ToList();
+            Console.WriteLine("Listing all customers");
+            var customers = session.Query<Customer>()
+                .Customize(ctx=> ctx.WaitForNonStaleResultsAsOfNow())
+                .ToList();
 
             foreach (var customer in customers)
             {
@@ -36,11 +39,12 @@ namespace RavenDBDemo
         {
             var customer = new Customer
             {
-                Name = "Demo " + DateTime.Now.ToLongTimeString()
+                FullName = "Demo " + DateTime.Now.ToLongTimeString()
             };
 
             session.Store(customer);
             session.SaveChanges();
+            Console.WriteLine("Added a new customer: {0}", customer);
         }
     }
 }

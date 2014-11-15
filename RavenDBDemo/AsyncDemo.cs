@@ -24,6 +24,7 @@ namespace RavenDBDemo
 
         private static async Task ListCustomers(IAsyncDocumentSession session)
         {
+            Console.WriteLine("Listing all customers without blocking a thread");
             var customers = await session.Query<Customer>().ToListAsync();
             foreach (var customer in customers)
             {
@@ -35,11 +36,12 @@ namespace RavenDBDemo
         {
             var customer = new Customer
             {
-                Name = "Demo " + DateTime.Now.ToLongTimeString()
+                FullName = "Demo " + DateTime.Now.ToLongTimeString()
             };
 
             await session.StoreAsync(customer);
             await session.SaveChangesAsync();
+            Console.WriteLine("Added a new customer: {0} without blocking a thread", customer);
         }
     }
 }

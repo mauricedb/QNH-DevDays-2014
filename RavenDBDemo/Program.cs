@@ -12,12 +12,13 @@ namespace RavenDBDemo
                 ConnectionStringName = "RavenDB"
             }.Initialize();
 
-            var syncDemo = new SyncDemo(documentStore);
-            syncDemo.Execute();
+            //var syncDemo = new SyncDemo(documentStore);
+            //syncDemo.Execute();
 
-            //var asyncDemo = new AsyncDemo(documentStore);
-            //asyncDemo.Execute().Wait();
+            var asyncDemo = new AsyncDemo(documentStore);
+            asyncDemo.Execute().Wait();
 
+            Console.WriteLine("All done.");
             Console.ReadLine();
         }
     }
